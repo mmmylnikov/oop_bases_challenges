@@ -15,6 +15,20 @@ class Product:
         self.amount = amount
         self.weight = weight
 
+    def __repr__(self) -> dict: 
+        return {
+            'name':self.name, 
+            'description':self.description,
+            'amount':self.amount,
+            'weight':self.weight, 
+            }
+    
+    def __str__(self) -> str:
+        output = 'Информация о продукте: '
+        output += f'{self.name}, {self.description}, '
+        output += f'{self.amount}, {self.weight}'
+        return output
+    
 
 if __name__ == '__main__':
     product_instance = Product(
@@ -23,7 +37,5 @@ if __name__ == '__main__':
         amount='1000.00',
         weight='3.5'
     )
-    print(f'Информация о продукте: \
-{product_instance.name}, {product_instance.description}, \
-{product_instance.amount}, {product_instance.weight}')
+    print(product_instance)
     
