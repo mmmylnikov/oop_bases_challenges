@@ -22,7 +22,8 @@ class User:
         return output
 
 
-user_instance = User(user_id=1, username='mmmylnikov', name='Max')
-print(user_instance)
-print(user_instance.make_username_capitalized())
-print(user_instance.generate_short_user_description())
+if __name__ == "__main__":
+    user_instance = User(user_id=1, username='mmmylnikov', name='Max')
+    print(user_instance)
+    print(user_instance.make_username_capitalized())
+    print(user_instance.generate_short_user_description())

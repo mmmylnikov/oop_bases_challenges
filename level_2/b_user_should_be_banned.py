@@ -28,9 +28,10 @@ class User:
         self.is_banned = True
 
 
-user_instances = [
-    User(first_name='Max', last_name='Mylnikov', age=29),
-    User(first_name='John', last_name='Porter', age=10)
-]
-for user in user_instances:
-    print(user)
+if __name__ == "__main__":
+    user_instances = [
+        User(first_name='Max', last_name='Mylnikov', age=29),
+        User(first_name='John', last_name='Porter', age=10)
+    ]
+    for user in user_instances:
+        print(user)
