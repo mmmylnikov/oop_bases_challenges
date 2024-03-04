@@ -14,20 +14,43 @@ from datetime import datetime
 
 
 class Product:
-    def __init__(self, title, quantity):
+    def __init__(self, title: str, quantity: int):
         self.title = title
         self.quantity = quantity
 
-    def get_full_info(self):
+    def get_full_info(self) -> str:
         return f'Product {self.title}, {self.quantity} in stock.'
 
-    def is_available(self):
+    def is_available(self) -> bool:
         return self.quantity > 0
 
 
 class FoodProduct(Product):
-    pass  # код писать тут
+    def __init__(self, title: str, quantity: int, expiration_date: datetime):
+        super().__init__(title, quantity)
+        self.expiration_date = expiration_date
+
+    def get_full_info(self) -> str:
+        output = f'Product {self.title}, {self.quantity} in stock, '
+        output += f'{self.expiration_date} expiration date.'
+        return output
+
+    def is_available(self) -> bool:
+        return all([
+            super().is_available(),
+            datetime.now() < self.expiration_date,
+            ])
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    product_instance = Product(title='Продукт', quantity=100)
+    print(product_instance.__class__)
+    print(product_instance.get_full_info())
+    print(product_instance.is_available())
+
+    food_instance = FoodProduct(
+        title='Молоко', quantity=20,
+        expiration_date=datetime(year=2024, month=1, day=15))
+    print(food_instance.__class__)
+    print(food_instance.get_full_info())
+    print(food_instance.is_available())

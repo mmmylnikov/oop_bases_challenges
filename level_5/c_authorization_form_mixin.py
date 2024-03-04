@@ -13,21 +13,29 @@ USERNAMES_IN_DB = ['Alice_2023', 'BobTheBuilder', 'CrazyCoder', 'DataDiva', 'Epi
 
 
 class Form:
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str) -> None:
         self.username = username
         self.password = password
 
-    def valid_form(self):
+    def valid_form(self) -> bool:
         return len(self.password) > 8
 
 
 class AuthorizationFormMixin:
-    def valid_form(self):
-        pass  # писать код тут
+    username: str
+
+    def valid_form(self) -> bool:
+        return all([
+            super().valid_form(),
+            self.username in USERNAMES_IN_DB,
+        ])
 
 
-# писать код тут
+class AuthorizationForm(AuthorizationFormMixin, Form):
+    pass
 
 
 if __name__ == '__main__':
-    pass  # писать код тут
+    print(AuthorizationForm.mro())
+    print(AuthorizationForm(
+        username='Alice_2023', password='123456789',).valid_form())
