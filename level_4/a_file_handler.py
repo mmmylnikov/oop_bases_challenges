@@ -17,21 +17,31 @@ import json
 
 
 class FileHandler:
-    def __init__(self, filename):
+    def __init__(self, filename: str) -> None:
         self.filename = filename
 
-    def read(self):
+    def read(self) -> str:
         with open(self.filename, 'r') as file:
             return file.read()
 
 
 class JSONHandler(FileHandler):
-    pass  # код писать тут
+    def read(self) -> dict[str, str | int]:
+        with open(self.filename, 'r') as file:
+            return json.load(file)
 
 
 class CSVHandler(FileHandler):
-    pass  # код писать тут
+    def read(self) -> list[dict[str, str | int]]:
+        with open(self.filename, 'r') as file:
+            return list(csv.DictReader(file, skipinitialspace=True))
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    text_path = 'level_4/data/text.txt'
+    json_path = 'level_4/data/recipes.json'
+    csv_path = 'level_4/data/user_info.csv'
+
+    print(FileHandler(filename=text_path).read())
+    print(JSONHandler(filename=json_path).read())
+    print(CSVHandler(filename=csv_path).read())
