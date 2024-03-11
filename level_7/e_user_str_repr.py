@@ -5,6 +5,7 @@
        об айдишнике пользователя и его емэйле, а при вызове repr() возвращалась информация о том, является ли пользователь
        админом
 """
+from typing import Any
 
 
 class User:
@@ -12,6 +13,19 @@ class User:
         self.user_id = user_id
         self.email = email
         self.is_admin = is_admin
+
+    @property
+    def class_name(self) -> str:
+        return self.__class__.__name__
+
+    def get_attrs(self, attr_names: set[str]) -> dict[str, Any]:
+        return {k: v for k, v in vars(self).items() if k in attr_names}
+
+    def __str__(self) -> str:
+        return f"{self.class_name} ({self.get_attrs({'user_id', 'email'})})"
+
+    def __repr__(self) -> str:
+        return f"{self.class_name} ({self.get_attrs({'is_admin'})})"
 
 
 if __name__ == '__main__':
