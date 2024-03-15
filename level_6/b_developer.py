@@ -9,35 +9,56 @@
 
 
 class Employee:
-    def __init__(self, name: str, surname: str, age: int, salary: float):
+    def __init__(
+            self, name: str, surname: str, age: int, salary: float) -> None:
         self.name = name
         self.surname = surname
         self.age = age
         self.salary = salary
 
-    def get_info(self):
+    def get_info(self) -> str:
         return f'{self.name} with salary {self.salary}'
 
 
 class ItDepartmentEmployee(Employee):
-    def __init__(self, name: str, surname: str, age: int, salary: float):
+    def __init__(
+            self, name: str, surname: str, age: int, salary: float) -> None:
         super().__init__(name, surname, age, salary)
         self.salary *= 2
 
 
 class AdminMixin:
-    def increase_salary(self, employee: Employee, amount: float):
+    def increase_salary(self, employee: Employee, amount: float) -> None:
         employee.salary += amount
 
 
 class SuperAdminMixin(AdminMixin):
-    def decrease_salary(self, employee: Employee, amount: float):
+    def decrease_salary(self, employee: Employee, amount: float) -> None:
         employee.salary -= amount
 
 
-# код писать тут
+class Developer(SuperAdminMixin, ItDepartmentEmployee):
+    def __init__(self,
+                 name: str, surname: str, age: int, salary: float,
+                 lang: str) -> None:
+        super().__init__(name, surname, age, salary)
+        self.lang = lang
+
+    def get_info(self) -> str:
+        return super().get_info() + f' ({self.lang} developer)'
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    print(Developer.mro())
 
+    developer_instance = Developer(
+        name='Max', surname='Mylnikov', age=29, salary=10_000_000.00,
+        lang='Python'
+    )
+
+    developer_instance.decrease_salary(
+        employee=developer_instance, amount=1.00)
+    developer_instance.increase_salary(
+        employee=developer_instance, amount=1_000_000.00)
+
+    print(developer_instance.get_info())
